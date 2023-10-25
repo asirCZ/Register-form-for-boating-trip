@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="/static/style.css"/>
+    <title>Vodák</title>
+</head>
+<body>
+    <header>
+        <h1>Rozsazení v lodích na vodáckém kurzu 2023 SPŠE Ječná</h1>
+        <a href="/registrace">Registrovat se</a>
+    </header>
+    <br>
+    <br>
+    <div class="container">
+        <h3>Seznam účastníků</h3>
+        <table>
+            <tr>
+                <th>Účastník</th>
+                <th>Je plavec</th>
+                <th>Kamarád do lodi</th>
+            </tr>
+            {% for ucastnik in ucastnici %}
+                <tr>
+                    <td>{{ucastnik.nick}}</td>
+                    <td>{{ucastnik.je_plavec}}</td>
+                    <td>{{ucastnik.kanoe_kamarad}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
