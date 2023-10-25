@@ -11,16 +11,17 @@
     <header>
         <h1>Rozsazení v lodích na vodáckém kurzu 2023 SPŠE Ječná</h1>
     </header>
-    <div class="container">
+    <div class="container register">
         <form id="registrace" method="POST" action="/registrace">
             <input type="text" name="nick" id="nick" placeholder="Přezdívka" minlength="2" maxlength="20"
                    oninput="formatCheck(this)" required>
             <div id="inputdiv">
-                <input type="text" name="jmenoprijmeni" id="jmenoprijmeni" placeholder="Jméno a Příjímení" minlength="2"
+                <input type="text" name="jmenoprijimeni" id="jmenoprijimeni" placeholder="Jméno a Přijímení"
+                       minlength="2"
                    maxlength="50" oninput="formatCheck(this)" required>
                 <select name="trida" id="trida" required>
-                    <option value="">Třída</option>
-                     <option value="separator">-----</option>
+                    <option value="separator">Třída</option>
+                    <option value="separator">-----</option>
                     <option value="A1a">A1a</option>
                     <option value="A1b">A1b</option>
                     <option value="A2a">A2a</option>
@@ -42,7 +43,7 @@
                     <option value="C4a">C4a</option>
                     <option value="C4b">C4b</option>
                     <option value="C4c">C4c</option>
-                     <option value="separator">-----</option>
+                    <option value="separator">-----</option>
                     <option value="E1">E1</option>
                     <option value="E2">E2</option>
                     <option value="E3">E3</option>
@@ -72,7 +73,7 @@
                 $('#chyba').text("")
                 $('#'+item.id).css("background-color", "rgb(34, 50, 55)")
             }
-            else if(item.id == "jmenoprijmeni") {
+            else if(item.id == "jmenoprijimeni") {
                 $('#chyba').text("")
                 $('#'+item.id).css("background-color", "rgb(34, 50, 55)")
             }
@@ -86,16 +87,18 @@
 
         $('#registrace').submit(function() {
             let ni = $('#nick').val()
-            let jm = $('#jmenoprijmeni').val()
+            let jm = $('#jmenoprijimeni').val()
+            let tr = $('#trida').val()
             let km = $('#kanoe_kamarad').val()
             let pl = $('#je_plavec').val()
 
             if(!pl) return false
             else if(ni.length >= 2 && ni.length <= 20 && pattern.test(ni) &&
-                jm.length >= 2 && jm.length <= 50 && pattern_name.test(jm) && km == "") return true
+                jm.length >= 2 && jm.length <= 50 && pattern_name.test(jm) && tr.toString() != "separator" &&
+                km.toString() == "")
+                return true
             else if(km != null && km.length >= 2 && km.length <= 20 && pattern.test(km)) return true
             else return false
-
         });
     </script>
 </body>

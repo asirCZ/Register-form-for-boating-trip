@@ -17,12 +17,16 @@
         <h3>Seznam účastníků</h3>
         <table>
             <tr>
-                <th>Účastník</th>
+                <th>Jméno a Přijímení</th>
+                <th>Třída</th>
+                <th>Přezdívka</th>
                 <th>Je plavec</th>
                 <th>Kamarád do lodi</th>
             </tr>
             {% for ucastnik in ucastnici %}
                 <tr>
+                    <td>{{ucastnik.jmenoprijimeni}}</td>
+                    <td>{{ucastnik.trida}}</td>
                     <td>{{ucastnik.nick}}</td>
                     <td>{{ucastnik.je_plavec}}</td>
                     <td>{{ucastnik.kanoe_kamarad}}</td>

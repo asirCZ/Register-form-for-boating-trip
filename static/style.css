@@ -48,11 +48,15 @@ header a {
 
 .container {
     width: 100%;
-    max-width: 25rem;
+    max-width: 40rem;
 
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.register {
+    max-width: 25rem;
 }
 
 table {
