@@ -28,7 +28,6 @@
                 <!--<th>Přezdívka</th>-->
                 <th>Plavec</th>
                 <th>Kamarád</th>
-                <th>Souhlas kamaráda</th>
             </tr>
             {% for p in participants %}
                 <tr>
@@ -37,7 +36,6 @@
                     <!--<td>{{p.nick}}</td>-->
                     <td>{{p.swimmer}}</td>
                     <td>{{p.friend}}</td>
-                    <td>{{p.friend_approved}}</td>
                 </tr>
             {% endfor %}
         </table>

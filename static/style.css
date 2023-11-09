@@ -65,13 +65,13 @@ table {
 }
 
 table th, table td {
-    padding: .5rem;
+    padding: .4rem;
     text-align: left;
-    background-color: black;
+    background-color: rgb(15, 26, 28);
 }
 
 table th {
-    background-color: #333;
+    background-color: rgb(34, 50, 55);
     color: white;
 }
 
@@ -176,6 +176,7 @@ table th {
 #check div input {
     margin-right: 1rem;
 }
+
 
 
 #tablelink{

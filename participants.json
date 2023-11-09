@@ -1,1 +1,38 @@
-[{"nick": "Erik12", "name": "Erik Van\u011bk", "email": "vanek3@spsejecna.cz", "pass": "12345", "school_class": "C4c", "friend": "Ondra13", "friend_approved": "Ne", "swimmer": "Ano", "gdpr": "Souhlas ud\u011blen"}]
+[
+  {
+    "name": "Erik Van\u011bk",
+    "email": "vanek3@spsejecna.cz",
+    "pass": "12345",
+    "school_class": "C4c",
+    "friend": "Bruno Jan\u00e1\u010dek",
+    "swimmer": "Ano",
+    "gdpr": "Souhlas ud\u011blen"
+  },
+  {
+    "name": "Daniel Ad\u00e1mek",
+    "email": "adamek@spsejecna.cz",
+    "pass": "12345",
+    "school_class": "C4c",
+    "friend": "Simona Hem\u017ealov\u00e1",
+    "swimmer": "Ano",
+    "gdpr": "Souhlas ud\u011blen"
+  },
+  {
+    "name": "Simona Hem\u017ealov\u00e1",
+    "email": "hemzalova@spsejecna.cz",
+    "pass": "12345",
+    "school_class": "C2b",
+    "friend": "Daniel Ad\u00e1mek",
+    "swimmer": "Ano",
+    "gdpr": "Souhlas ud\u011blen"
+  },
+  {
+    "name": "\u010ean\u00edel",
+    "email": "asd@ss.com",
+    "pass": "123454",
+    "school_class": "A3a",
+    "friend": "asdas",
+    "swimmer": "Ano",
+    "gdpr": "Souhlas ud\u011blen"
+  }
+]

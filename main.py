@@ -26,7 +26,7 @@ def write_participants():
 # Check regex of nick, and friend
 def checkReg(val):
     if val is not None:
-        if re.match(r'^[a-zA-Z0-9]+$', val):
+        if re.match(r'^[a-zA-Z\u00C0-\u017F\s]+$', val):
             return True
         else:
             return False
@@ -43,50 +43,50 @@ def index():
 def registration():
     chyba = None
     if request.method == 'GET':
-        return render_template('registrace.html'), 200
+        return render_template('registration.html'), 200
     elif request.method == 'POST':
-        nick = request.form.get('nick')
         name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('pass')
         school_class = request.form.get('school_class')
         friend = request.form.get('friend')
         swimmer = request.form.get('swimmer')
+        gdpr = request.form.get('gdpr')
 
-        if swimmer:
+        if swimmer and gdpr:
             if school_class != "separator":
-                if kontrola(name) == "True" and kontrola(nick) == "True":
-                    if checkReg(nick):
+                if nickcheck(name) == "True":
+                    if checkReg(name):
                         if friend is None and not checkReg(friend):
                             friend = "X"
 
                         participants.append(
                             {
-                                "nick": nick,
                                 "name": name,
                                 "email": email,
                                 "pass": password,
                                 "school_class": school_class,
                                 "friend": friend,
-                                "friend_approved": "Ne",
                                 "swimmer": "Ano",
                                 "gdpr": "Souhlas udělen"
                             }
                         )
                         write_participants()
                     else:
-                        chyba = "Použij pouze písmena nebo čísla"
+                        chyba = "Použij pouze písmena"
                 else:
                     chyba = "Toto jméno je už použito"
             else:
-                chyba = "Vyber si třídu"
+                chyba = "Vyber si validní třídu"
         else:
-            chyba = "Musíš být swimmer"
+            chyba = "Musíš být být plavec a souhasit s GDPR"
+
 
         if chyba is None:
             return redirect('/')
         else:
-            return render_template('registrace.html', chyba=chyba), 400
+            return render_template('registration.html', chyba=chyba), 400
+
 
 
 @app.route('/table', methods=['GET', 'POST'])
@@ -109,13 +109,14 @@ def table():
             return render_template('table.html'), 400
 
 @app.route('/nickcheck/<nick>', methods=['GET'])
-def kontrola(val):
+def nickcheck(val):
     safe = True
-    for ucastnik in participants:
-        if val in ucastnik.values():
+    for p in participants:
+        if val.lower() in p["name"].lower():
             safe = False
             break
     return str(safe)
+
 
 
 if __name__ == '__main__':

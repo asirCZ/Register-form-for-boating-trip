@@ -13,10 +13,6 @@
     </header>
     <div class="container register">
         <form id="registration" method="POST" action="/registration">
-            <input type="text" name="nick" id="nick" placeholder="Přezdívka" minlength="2" maxlength="20"
-                   oninput="formatCheck(this)" required>
-            <input type="text" name="friend" id="friend" placeholder="Kamarád na loď"
-                   oninput="formatCheck(this)">
             <div id="inputdiv">
                 <input type="text" name="name" id="name" placeholder="Jméno a Přijímení"
                        minlength="2"
@@ -52,8 +48,9 @@
                     <option value="E4">E4</option>
                 </select>
             </div>
-            <input type="email" name="email" id="email" placeholder="Školní e-mail" required>
+            <input type="email" name="email" id="email" placeholder="E-mail" required>
             <input type="password" name="pass" id="pass" placeholder="Heslo" minlength="5" required>
+            <input type="text" name="friend" id="friend" placeholder="Kamarád na loď" oninput="formatCheck(this)">
             <div id="check">
                 <div>
                     <input type="checkbox" name="swimmer" id="swimmer" required>
@@ -71,24 +68,17 @@
     </div>
 
     <script>
-        const pattern = /^[a-zA-Z0-9]+$/
+        const pattern = /^[a-zA-Z\u00C0-\u017F\s]+$/
         const pattern_name = /^[\p{L}\p{N}]+$/u
 
         function formatCheck(item) {
-            if(item.id == "nick" || item.id == "friend") {
-                if(item.value.length >= 2 && item.value.length <= 20 && pattern.test(item.value) || item.value.length <= 0) {
-                $('#chyba').text("")
-                $('#'+item.id).css("background-color", "rgb(34, 50, 55)")
-            }
-            else if(item.id == "name") {
+            if(item.value.length >= 2 && pattern.test(item.value) || item.value.length <= 0) {
                 $('#chyba').text("")
                 $('#'+item.id).css("background-color", "rgb(34, 50, 55)")
             }
             else {
-                $('#chyba').text("Text může obsahovat pouze obyčejná písmena a číslice")
-                console.log(item.id)
+                $('#chyba').text("Text může obsahovat pouze písmena")
                 $('#'+item.id).css("background-color", "red")
-            }
             }
         }
 
