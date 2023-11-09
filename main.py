@@ -3,23 +3,27 @@ import re
 import os
 import json
 
-ucastnici = []
-file_path_ucastnici = "ucastnici.json"
+participants = []
+file_path_participants = "participants.json"
 
+
+
+# On start, load all users to lists
 try:
-    if os.path.getsize(file_path_ucastnici) >= 5:
-        with open(file_path_ucastnici, "r") as json_file:
-            ucastnici = json.load(json_file)
+    if os.path.getsize(file_path_participants) >= 5:
+        with open(file_path_participants, "r") as json_file:
+            participants = json.load(json_file)
 except FileNotFoundError:
-    print(f"File '{file_path_ucastnici}' not found. Starting with an empty list.")
+    print(f"File path not found. Starting with an empty list.")
 
-def write_ucastnici():
-    with open(file_path_ucastnici, "w") as json_file:
-        json.dump(ucastnici, json_file)
+# Write new participants to file
+def write_participants():
+    with open(file_path_participants, "w") as json_file:
+        json.dump(participants, json_file)
 
 
 
-
+# Check regex of nick, and friend
 def checkReg(val):
     if val is not None:
         if re.match(r'^[a-zA-Z0-9]+$', val):
@@ -29,42 +33,47 @@ def checkReg(val):
 
 
 
-
-
 app = Flask(__name__, static_url_path='/static', static_folder='static', template_folder='templates')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', ucastnici = ucastnici), 200
+    return render_template('index.html', participants=participants), 200
 
-@app.route('/registrace', methods=['GET', 'POST'])
-def registrace():
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
     chyba = None
     if request.method == 'GET':
         return render_template('registrace.html'), 200
     elif request.method == 'POST':
         nick = request.form.get('nick')
-        jmenoprijimeni = request.form.get('jmenoprijimeni')
-        trida = request.form.get('trida')
-        kanoe_kamarad = request.form.get('kanoe_kamarad')
-        je_plavec = request.form.get('je_plavec')
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('pass')
+        school_class = request.form.get('school_class')
+        friend = request.form.get('friend')
+        swimmer = request.form.get('swimmer')
 
-        if je_plavec:
-            if trida != "separator":
-                if kontrola(jmenoprijimeni) == "True" and kontrola(nick) == "True":
+        if swimmer:
+            if school_class != "separator":
+                if kontrola(name) == "True" and kontrola(nick) == "True":
                     if checkReg(nick):
-                        if kanoe_kamarad is None and not checkReg(kanoe_kamarad):
-                            kanoe_kamarad = "X"
-                        ucastnici.append(
+                        if friend is None and not checkReg(friend):
+                            friend = "X"
+
+                        participants.append(
                             {
                                 "nick": nick,
-                                "jmenoprijimeni": jmenoprijimeni,
-                                "trida": trida,
-                                "kanoe_kamarad": kanoe_kamarad,
-                                "je_plavec": "Ano"
+                                "name": name,
+                                "email": email,
+                                "pass": password,
+                                "school_class": school_class,
+                                "friend": friend,
+                                "friend_approved": "Ne",
+                                "swimmer": "Ano",
+                                "gdpr": "Souhlas udělen"
                             }
                         )
-                        write_ucastnici()
+                        write_participants()
                     else:
                         chyba = "Použij pouze písmena nebo čísla"
                 else:
@@ -72,7 +81,7 @@ def registrace():
             else:
                 chyba = "Vyber si třídu"
         else:
-            chyba = "Musíš být plavec"
+            chyba = "Musíš být swimmer"
 
         if chyba is None:
             return redirect('/')
@@ -80,15 +89,34 @@ def registrace():
             return render_template('registrace.html', chyba=chyba), 400
 
 
+@app.route('/table', methods=['GET', 'POST'])
+def table():
+    if request.method == 'GET':
+        return render_template('table.html'), 200
 
-@app.route('/kontrola/<nick>', methods=['GET'])
+    elif request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('pass')
+
+        ok = False
+        for p in participants:
+            if p['email'] == email and p['pass'] == password:
+                ok = True
+
+        if ok:
+            return render_template('table.html', participants = participants), 200
+        else:
+            return render_template('table.html'), 400
+
+@app.route('/nickcheck/<nick>', methods=['GET'])
 def kontrola(val):
     safe = True
-    for ucastnik in ucastnici:
+    for ucastnik in participants:
         if val in ucastnik.values():
             safe = False
             break
     return str(safe)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

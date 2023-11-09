@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="/static/style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Vodák - Tabulka</title>
+</head>
+<body>
+    <header>
+        <h1>Rozsazení v lodích na vodáckém kurzu 2023 SPŠE Ječná</h1>
+    </header>
+    <a href="/">Vrátit se zpět</a>
+    <div class="container">
+        <div class="container register">
+        <form id="showtable" method="POST" action="/table">
+            <input type="email" name="email" id="email" placeholder="E-Mail">
+            <input type="password" name="pass" id="pass" placeholder="Heslo">
+            <button name="send" id="send">Zobrazit účastníky</button>
+        </form>
+        <p id="chyba">{{ chyba }}</p>
+    </div>
+        <table>
+            <tr>
+                <th>Student</th>
+                <th>Třída</th>
+                <!--<th>Přezdívka</th>-->
+                <th>Plavec</th>
+                <th>Kamarád</th>
+                <th>Souhlas kamaráda</th>
+            </tr>
+            {% for p in participants %}
+                <tr>
+                    <td>{{p.name}}</td>
+                    <td>{{p.school_class}}</td>
+                    <!--<td>{{p.nick}}</td>-->
+                    <td>{{p.swimmer}}</td>
+                    <td>{{p.friend}}</td>
+                    <td>{{p.friend_approved}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+     </div>
+    <script>
+        $('#showtable').submit(function() {
+             nick = $('#nick').val()
+             name = $('#name').val()
+            return true
+        });
+    </script>
+</body>
+</html>

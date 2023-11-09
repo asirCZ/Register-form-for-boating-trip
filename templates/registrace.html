@@ -5,21 +5,23 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/style.css"/>
-    <title>Vodák - registrace</title>
+    <title>Vodák - Registrace</title>
 </head>
 <body>
     <header>
         <h1>Rozsazení v lodích na vodáckém kurzu 2023 SPŠE Ječná</h1>
     </header>
     <div class="container register">
-        <form id="registrace" method="POST" action="/registrace">
+        <form id="registration" method="POST" action="/registration">
             <input type="text" name="nick" id="nick" placeholder="Přezdívka" minlength="2" maxlength="20"
                    oninput="formatCheck(this)" required>
+            <input type="text" name="friend" id="friend" placeholder="Kamarád na loď"
+                   oninput="formatCheck(this)">
             <div id="inputdiv">
-                <input type="text" name="jmenoprijimeni" id="jmenoprijimeni" placeholder="Jméno a Přijímení"
+                <input type="text" name="name" id="name" placeholder="Jméno a Přijímení"
                        minlength="2"
                    maxlength="50" oninput="formatCheck(this)" required>
-                <select name="trida" id="trida" required>
+                <select name="school_class" id="school_class" required>
                     <option value="separator">Třída</option>
                     <option value="separator">-----</option>
                     <option value="A1a">A1a</option>
@@ -50,12 +52,17 @@
                     <option value="E4">E4</option>
                 </select>
             </div>
-
-            <input type="text" name="kanoe_kamarad" id="kanoe_kamarad" placeholder="Kamarád na loď"
-                   oninput="formatCheck(this)">
-            <div id="plavec">
-                <input type="checkbox" name="je_plavec" id="je_plavec" required>
-                <p>Umím plavat, nejsem zbytečná existence</p>
+            <input type="email" name="email" id="email" placeholder="Školní e-mail" required>
+            <input type="password" name="pass" id="pass" placeholder="Heslo" minlength="5" required>
+            <div id="check">
+                <div>
+                    <input type="checkbox" name="swimmer" id="swimmer" required>
+                    <p>Potvrzuji že jsem plavec</p>
+                </div>
+                <div>
+                    <input type="checkbox" name="gdpr" id="gdpr" required>
+                    <p>Souhlasím s poskytnutím osobních údajů</p>
+                </div>
             </div>
             <button name="send" id="send">Odeslat</button>
             <a href="/">Vrátit se zpět</a>
@@ -68,12 +75,12 @@
         const pattern_name = /^[\p{L}\p{N}]+$/u
 
         function formatCheck(item) {
-            if(item.id == "nick" || item.id == "kanoe_kamarad") {
+            if(item.id == "nick" || item.id == "friend") {
                 if(item.value.length >= 2 && item.value.length <= 20 && pattern.test(item.value) || item.value.length <= 0) {
                 $('#chyba').text("")
                 $('#'+item.id).css("background-color", "rgb(34, 50, 55)")
             }
-            else if(item.id == "jmenoprijimeni") {
+            else if(item.id == "name") {
                 $('#chyba').text("")
                 $('#'+item.id).css("background-color", "rgb(34, 50, 55)")
             }
@@ -87,17 +94,19 @@
 
         $('#registrace').submit(function() {
             let ni = $('#nick').val()
-            let jm = $('#jmenoprijimeni').val()
-            let tr = $('#trida').val()
-            let km = $('#kanoe_kamarad').val()
-            let pl = $('#je_plavec').val()
+            let nm = $('#name').val()
+            let cl = $('#school_class').val()
+            let fr = $('#friend').val()
+            let sw = $('#swimmer').val()
+            let gd = $('#gdpr').val()
 
-            if(!pl) return false
+            if(!sw) return false
+            else if(!gd) return false
             else if(ni.length >= 2 && ni.length <= 20 && pattern.test(ni) &&
-                jm.length >= 2 && jm.length <= 50 && pattern_name.test(jm) && tr.toString() != "separator" &&
-                km.toString() == "")
+                nm.length >= 2 && nm.length <= 50 && pattern_name.test(nm) && cl.toString() != "separator" &&
+                fr.toString() == "")
                 return true
-            else if(km != null && km.length >= 2 && km.length <= 20 && pattern.test(km)) return true
+            else if(fr != null && fr.length >= 2 && fr.length <= 20 && pattern.test(fr)) return true
             else return false
         });
     </script>

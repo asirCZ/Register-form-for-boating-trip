@@ -9,30 +9,10 @@
 <body>
     <header>
         <h1>Rozsazení v lodích na vodáckém kurzu 2023 SPŠE Ječná</h1>
-        <a href="/registrace">Registrovat se</a>
+        <a href="/registration">Registrovat se</a>
     </header>
     <br>
     <br>
-    <div class="container">
-        <h3>Seznam účastníků</h3>
-        <table>
-            <tr>
-                <th>Jméno a Přijímení</th>
-                <th>Třída</th>
-                <th>Přezdívka</th>
-                <th>Je plavec</th>
-                <th>Kamarád do lodi</th>
-            </tr>
-            {% for ucastnik in ucastnici %}
-                <tr>
-                    <td>{{ucastnik.jmenoprijimeni}}</td>
-                    <td>{{ucastnik.trida}}</td>
-                    <td>{{ucastnik.nick}}</td>
-                    <td>{{ucastnik.je_plavec}}</td>
-                    <td>{{ucastnik.kanoe_kamarad}}</td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
+    <a href="/table" id="tablelink">Zobrazit seznam účastníků</a>
 </body>
 </html>
